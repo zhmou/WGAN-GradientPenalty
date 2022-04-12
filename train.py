@@ -102,16 +102,14 @@ class Trainer:
     @staticmethod
     def save_imgs(images, epoch):
         plt.rcParams['image.cmap'] = 'gray'
-        plt.rcParams['figure.figsize'] = (10.0, 8.0)
-        plt.rcParams['image.interpolation'] = 'nearest'
-
         sqrtn = int(np.ceil(np.sqrt(images.size(0))))
 
         for index, image in enumerate(images):
             plt.subplot(sqrtn, sqrtn, index + 1)
             plt.imshow(image)
             plt.axis('off')
-        plt.savefig('./img/Epoch{}.png'.format(epoch+1))
+            plt.subplots_adjust(wspace=0, hspace=0, left=0.2, right=0.8)
+        plt.savefig('./img/Epoch{}.png'.format(epoch+1), dpi=150)
 
     def train(self, dataloader, epochs):
         for epoch in range(epochs):
@@ -122,3 +120,4 @@ class Trainer:
                 if epoch + 1:
                     images = self.G(self.fixed_noise).reshape(-1, 28, 28)
                     self.save_imgs(images.cpu(), epoch)
+                    print('image saved!')

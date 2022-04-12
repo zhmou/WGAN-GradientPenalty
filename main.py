@@ -14,19 +14,19 @@ dataset = datasets.MNIST(root='./dataset/', train=True, download=False, transfor
 dataloader = DataLoader(dataset, shuffle=True, batch_size=batch_size)
 
 generator = Generator()
-discrimnator = Discrimnator()
+discriminator = Discrimnator()
 
 print(generator)
-print(discrimnator)
+print(discriminator)
 
 initial_lr = 5e-4
 betas = (0.9, 0.99)
 g_optimizer = optim.Adam(generator.parameters(), lr=initial_lr, betas=betas)
-d_optimizer = optim.Adam(discrimnator.parameters(), lr=initial_lr, betas=betas)
+d_optimizer = optim.Adam(discriminator.parameters(), lr=initial_lr, betas=betas)
 
-epochs = 1000
+epochs = 200
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-trainer = Trainer(generator, g_optimizer, discrimnator, d_optimizer, device=device)
+trainer = Trainer(generator, g_optimizer, discriminator, d_optimizer, device=device)
 trainer.train(dataloader, epochs)
 
 name = 'mnist_model'
